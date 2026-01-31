@@ -1,0 +1,73 @@
+# =====================================================
+# QUICK INSTALL COMMANDS - LISTING ALERT BOT
+# =====================================================
+# Copy-paste perintah ini satu per satu ke VPS
+
+# =====================================================
+# STEP 1: INSTALL DEPENDENCIES
+# =====================================================
+sudo apt update && sudo apt upgrade -y
+sudo apt install -y python3 python3-pip python3-venv
+
+# =====================================================
+# STEP 2: BUAT FOLDER & VIRTUAL ENVIRONMENT
+# =====================================================
+mkdir -p ~/listing_alert_bot
+cd ~/listing_alert_bot
+python3 -m venv venv
+source venv/bin/activate
+pip install requests
+
+# =====================================================
+# STEP 3: BUAT FILE SCRIPT
+# =====================================================
+nano listing_alert.py
+# Paste kode dari listing_alert.py, lalu Ctrl+X, Y, Enter
+
+# =====================================================
+# STEP 4: TEST MANUAL (Opsional)
+# =====================================================
+export TELEGRAM_BOT_TOKEN="your_token"
+export TELEGRAM_CHAT_ID="your_chat_id"
+python3 listing_alert.py
+# Tekan Ctrl+C untuk stop setelah test
+
+# =====================================================
+# STEP 5: BUAT SERVICE FILE
+# =====================================================
+sudo nano /etc/systemd/system/listing_alert.service
+# Paste konfigurasi dari listing_alert.service
+# PENTING: Ganti "ubuntu" dengan username kamu (cek: whoami)
+# PENTING: Ganti TOKEN dan CHAT_ID
+# Lalu Ctrl+X, Y, Enter
+
+# =====================================================
+# STEP 6: START BOT
+# =====================================================
+sudo systemctl daemon-reload
+sudo systemctl enable listing_alert
+sudo systemctl start listing_alert
+sudo systemctl status listing_alert
+
+# =====================================================
+# PERINTAH BERGUNA
+# =====================================================
+# Cek status:
+sudo systemctl status listing_alert
+
+# Lihat log:
+sudo journalctl -u listing_alert -f
+
+# Restart:
+sudo systemctl restart listing_alert
+
+# Stop:
+sudo systemctl stop listing_alert
+
+# Edit script:
+nano ~/listing_alert_bot/listing_alert.py
+
+# Edit service (setelah edit harus daemon-reload):
+sudo nano /etc/systemd/system/listing_alert.service
+sudo systemctl daemon-reload
+sudo systemctl restart listing_alert

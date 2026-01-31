@@ -1,0 +1,17 @@
+[Unit]
+Description=Listing Alert Bot
+After=network.target
+
+[Service]
+Type=simple
+User=ubuntu
+WorkingDirectory=/home/ubuntu/listing_alert_bot
+Environment="TELEGRAM_BOT_TOKEN=GANTI_DENGAN_TOKEN_KAMU"
+Environment="TELEGRAM_CHAT_ID=GANTI_DENGAN_CHAT_ID_KAMU"
+Environment="CHECK_INTERVAL=30"
+ExecStart=/home/ubuntu/listing_alert_bot/venv/bin/python3 /home/ubuntu/listing_alert_bot/listing_alert.py
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
